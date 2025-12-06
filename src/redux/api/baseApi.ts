@@ -29,15 +29,15 @@ export const baseApi = createApi({
         return { data: [] };
       },
       async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
-        // প্রথমে ক্যাশ লোড হওয়ার জন্য অপেক্ষা করি
+    
         await cacheDataLoaded;
 
-        // Firestore Listener চালু
+        // Firestore Listener opening
         const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
         
         const unsubscribe = onSnapshot(q, (snapshot) => {
           updateCachedData((draft) => {
-            // রিয়েল-টাইম ডাটা দিয়ে রিডাক্স স্টোর আপডেট করছি
+            // updating redux store by using real time data
             return snapshot.docs.map(doc => ({
               id: doc.id,
               ...doc.data()
@@ -45,7 +45,7 @@ export const baseApi = createApi({
           });
         });
 
-        // ইউজার যখন পেজ থেকে চলে যাবে, লিসেনার বন্ধ করে দিব (মেমোরি লিক রোধে)
+        
         await cacheEntryRemoved;
         unsubscribe();
       },
@@ -57,7 +57,7 @@ export const baseApi = createApi({
         url: '/products',
         method: 'POST',
         body: product,
-        withCredentials: true, // কুকি পাঠানোর জন্য
+        withCredentials: true, //for send cookie
       }),
     }),
 
@@ -70,15 +70,16 @@ export const baseApi = createApi({
       }),
     }),
 
-    // 4. Login (Call Backend)
-    login: builder.mutation<any, any>({
-      query: (credentials) => ({
-        url: '/login',
-        method: 'POST',
-        body: credentials,
-        withCredentials: true,
-      }),
-    }),
+   // 4. Login (Call Backend)
+login: builder.mutation<any, any>({
+  query: (credentials) => ({
+    url: '/auth/login', 
+    method: 'POST',
+    body: credentials,
+    withCredentials: true,
+  }),
+}),
+
 
   }),
 });
