@@ -18,7 +18,7 @@ type PartialProduct = Partial<Product> & { id: string };
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'http://localhost:5000',
+    baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
     prepareHeaders: (headers) => headers,
     fetchOptions: { credentials: 'include' }
   }), 
