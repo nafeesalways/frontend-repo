@@ -27,11 +27,15 @@ export default function LoginPage() {
     try {
       const result = await login({ email, password }).unwrap();
       
-      if (result.success) {
-        dispatch(setUser({ email }));
-        toast.success("Login Successful!"); // Success Toast
-        router.push('/dashboard/products');
-      }
+   // src/app/login/page.tsx
+// handleLogin ফাংশনের ভিতরে:
+
+if (result.success) {
+  dispatch(setUser({ email }));
+  toast.success("Login Successful!");
+  router.push('/products'); // আগে এখানে ভুল ছিল, এখন ঠিক হবে
+}
+
     } catch (err: any) {
       console.error("Login Error:", err);
       // Error Toast showing specific message or fallback

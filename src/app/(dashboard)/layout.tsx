@@ -29,8 +29,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   const navItems = [
-    { href: '/dashboard/products', label: 'Products', icon: Package },
-    { href: '/dashboard/analytics', label: 'Analytics', icon: LineChart },
+    { href: '/products', label: 'Products', icon: Package },
+    { href: '/analytics', label: 'Analytics', icon: LineChart },
   ];
 
   return (

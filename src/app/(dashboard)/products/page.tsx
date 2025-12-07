@@ -1,9 +1,9 @@
+// src/app/(dashboard)/products/page.tsx
 'use client';
 
-import { useState } from 'react';
 import { useGetProductsQuery, useDeleteProductMutation } from '@/redux/api/baseApi';
 import { Button } from '@/components/ui/button';
-import { Plus, Trash2, Edit, Loader2 } from 'lucide-react';
+import { Trash2, Loader2 } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -13,9 +13,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
+import { ProductModal } from '@/components/products/ProductModal'; // নিশ্চিত করুন পাথ ঠিক আছে
 
 export default function ProductsPage() {
-  // 1. Real-time Data Fetching from Firestore via RTK Query
   const { data: products = [], isLoading } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
 
@@ -34,12 +34,11 @@ export default function ProductsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">Products</h2>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Add Product
-        </Button>
+        
+        {/* Add Product Modal */}
+        <ProductModal mode="add" />
       </div>
 
-      {/* Loading State */}
       {isLoading ? (
          <div className="flex justify-center p-10">
            <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -78,10 +77,11 @@ export default function ProductsPage() {
                         {product.status}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right space-x-2">
-                      <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
-                      </Button>
+                    <TableCell className="text-right space-x-2 flex justify-end">
+                      
+                      {/* Edit Modal (Product Data Pass করা হচ্ছে) */}
+                      <ProductModal mode="edit" product={product} />
+
                       <Button 
                         variant="ghost" 
                         size="icon" 
