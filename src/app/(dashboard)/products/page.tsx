@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { ProductModal } from '@/components/products/ProductModal'; // নিশ্চিত করুন পাথ ঠিক আছে
+import { ProductModal } from '@/components/products/ProductModal'; 
 
 export default function ProductsPage() {
   const { data: products = [], isLoading } = useGetProductsQuery();
@@ -79,7 +79,7 @@ export default function ProductsPage() {
                     </TableCell>
                     <TableCell className="text-right space-x-2 flex justify-end">
                       
-                      {/* Edit Modal (Product Data Pass করা হচ্ছে) */}
+                      {/* Edit Modal (passing Product Data) */}
                       <ProductModal mode="edit" product={product} />
 
                       <Button 
