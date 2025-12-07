@@ -18,7 +18,7 @@ type PartialProduct = Partial<Product> & { id: string };
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
+    baseUrl: 'https://backend-repo-self.vercel.app',
     prepareHeaders: (headers) => headers,
     fetchOptions: { credentials: 'include' }
   }), 
