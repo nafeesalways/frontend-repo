@@ -12,7 +12,7 @@ export interface Product {
   createdAt: string;
 }
 
-// এই টাইপটি নতুন অ্যাড করা হয়েছে Update এর জন্য
+
 type PartialProduct = Partial<Product> & { id: string };
 
 export const baseApi = createApi({
@@ -52,7 +52,7 @@ export const baseApi = createApi({
       }),
     }),
 
-    // এই মিউটেশনটি মিসিং ছিল, তাই এরর আসছিল
+ 
     updateProduct: builder.mutation<void, PartialProduct>({
       query: ({ id, ...patch }) => ({
         url: `/products/${id}`,
@@ -78,11 +78,11 @@ export const baseApi = createApi({
   }),
 });
 
-// এখান থেকে useUpdateProductMutation এক্সপোর্ট হচ্ছে কিনা নিশ্চিত করুন
+
 export const { 
   useGetProductsQuery, 
   useAddProductMutation, 
-  useUpdateProductMutation, // এটি অবশ্যই এক্সপোর্ট করতে হবে
+  useUpdateProductMutation, 
   useDeleteProductMutation,
   useLoginMutation 
 } = baseApi;

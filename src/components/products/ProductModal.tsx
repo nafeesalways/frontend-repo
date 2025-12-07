@@ -1,4 +1,4 @@
-// src/components/products/ProductModal.tsx
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -46,7 +46,7 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
   const [addProduct, { isLoading: isAdding }] = useAddProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
-  // যখন modal খোলা হবে তখন edit মোডে ডাটা লোড করা
+
   useEffect(() => {
     if (open && mode === 'edit' && product) {
       reset({
@@ -82,7 +82,7 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
     }
   };
 
-  // ট্রিগার বাটন (Add বা Edit আইকন)
+
   const TriggerButton = mode === 'add' ? (
     <Button>
       <Plus className="mr-2 h-4 w-4" /> Add Product

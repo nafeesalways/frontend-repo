@@ -27,13 +27,12 @@ export default function LoginPage() {
     try {
       const result = await login({ email, password }).unwrap();
       
-   // src/app/login/page.tsx
-// handleLogin ফাংশনের ভিতরে:
+
 
 if (result.success) {
   dispatch(setUser({ email }));
   toast.success("Login Successful!");
-  router.push('/products'); // আগে এখানে ভুল ছিল, এখন ঠিক হবে
+  router.push('/products'); 
 }
 
     } catch (err: any) {

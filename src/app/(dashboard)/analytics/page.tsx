@@ -10,7 +10,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 export default function AnalyticsPage() {
   const { data: products = [] } = useGetProductsQuery();
 
-  // ১. ক্যাটাগরি অনুযায়ী প্রোডাক্ট সংখ্যা গণনা
+  // calculate product based on category
   const categoryData = products.reduce((acc: any[], product) => {
     const existing = acc.find(item => item.name === product.category);
     if (existing) {
@@ -21,7 +21,7 @@ export default function AnalyticsPage() {
     return acc;
   }, []);
 
-  // ২. প্রোডাক্ট অনুযায়ী স্টক লেভেল
+  // ২. stock level based on product
   const stockData = products.slice(0, 10).map(p => ({
     name: p.name,
     stock: p.stock
