@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -46,7 +45,6 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
   const [addProduct, { isLoading: isAdding }] = useAddProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
 
-
   useEffect(() => {
     if (open && mode === 'edit' && product) {
       reset({
@@ -82,9 +80,8 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
     }
   };
 
-
   const TriggerButton = mode === 'add' ? (
-    <Button>
+    <Button className="w-full sm:w-auto"> 
       <Plus className="mr-2 h-4 w-4" /> Add Product
     </Button>
   ) : (
@@ -98,7 +95,9 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
       <DialogTrigger asChild>
         {TriggerButton}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      
+      
+      <DialogContent className="w-[95vw] sm:w-full sm:max-w-[425px] p-6">
         <DialogHeader>
           <DialogTitle>
             {mode === 'edit' ? 'Edit Product' : 'Add New Product'}
@@ -110,6 +109,7 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
             }
           </DialogDescription>
         </DialogHeader>
+
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
           
           <div className="grid gap-2">
@@ -123,7 +123,8 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
             <Input id="category" {...register('category', { required: true })} />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+        
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="price">Price</Label>
               <Input id="price" type="number" {...register('price', { required: true, min: 0 })} />
@@ -134,7 +135,7 @@ export function ProductModal({ mode = 'add', product }: ProductModalProps) {
             </div>
           </div>
 
-          <Button type="submit" disabled={isAdding || isUpdating}>
+          <Button type="submit" disabled={isAdding || isUpdating} className="w-full mt-2">
             {(isAdding || isUpdating) ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (

@@ -1,4 +1,3 @@
-// src/app/(dashboard)/products/page.tsx
 'use client';
 
 import { useGetProductsQuery, useDeleteProductMutation } from '@/redux/api/baseApi';
@@ -31,12 +30,16 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Products</h2>
+    <div className="space-y-6 px-2 sm:px-0"> {/* add padding in small screen*/}
+      
+     
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Products</h2>
         
         {/* Add Product Modal */}
-        <ProductModal mode="add" />
+        <div className="w-full sm:w-auto">
+          <ProductModal mode="add" />
+        </div>
       </div>
 
       {isLoading ? (
@@ -44,58 +47,64 @@ export default function ProductsPage() {
            <Loader2 className="h-8 w-8 animate-spin text-primary" />
          </div>
       ) : (
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Stock</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {products.length === 0 ? (
+        // Responsive Table Container
+        <div className="rounded-md border overflow-hidden">
+          {/* add overflow-x-auto for scrolling in mobile device */}
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">
-                    No products found. Add your first product!
-                  </TableCell>
+                  <TableHead className="w-[150px] sm:w-auto">Name</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Price</TableHead>
+           
+                  <TableHead className="hidden sm:table-cell">Stock</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ) : (
-                products.map((product) => (
-                  <TableRow key={product.id}>
-                    <TableCell className="font-medium">{product.name}</TableCell>
-                    <TableCell>{product.category}</TableCell>
-                    <TableCell>${product.price}</TableCell>
-                    <TableCell>{product.stock}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        product.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                        {product.status}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right space-x-2 flex justify-end">
-                      
-                      {/* Edit Modal (passing Product Data) */}
-                      <ProductModal mode="edit" product={product} />
-
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(product.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+              </TableHeader>
+              <TableBody>
+                {products.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">
+                      No products found. Add your first product!
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : (
+                  products.map((product) => (
+                    <TableRow key={product.id}>
+                      <TableCell className="font-medium whitespace-nowrap">{product.name}</TableCell>
+                      <TableCell className="whitespace-nowrap">{product.category}</TableCell>
+                      <TableCell>${product.price}</TableCell>
+                      <TableCell className="hidden sm:table-cell">{product.stock}</TableCell>
+                      <TableCell>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          product.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {product.status}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          {/* Edit Modal */}
+                          <ProductModal mode="edit" product={product} />
+
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="text-destructive hover:text-destructive h-8 w-8"
+                            onClick={() => handleDelete(product.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       )}
     </div>
